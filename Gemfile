@@ -32,6 +32,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# using serviceworker
+gem "serviceworker-rails"
+
 # using dotenv-rails
 gem 'dotenv-rails'
 
