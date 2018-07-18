@@ -35,48 +35,44 @@ class MapsController < ApplicationController
     @map = Map.new(map_params)
     @map.user_id = current_user.id
 
-    respond_to do |format|
-      if @map.save
+    if @map.save
 
-        File.open("public/temp.jpg","wb") do |file|
-            file.write @s3.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
-        end
-
-        @exif = EXIFR::JPEG.new("public/temp.jpg")
-        @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
-                    :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
-                    :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
-
-        format.html { redirect_to @map, notice: 'Map was successfully created.' }
-        format.json { render :show, status: :created, location: @map }
-      else
-        format.html { render :new }
-        format.json { render json: @map.errors, status: :unprocessable_entity }
+      File.open("./public/temp.jpg","wb") do |file|
+          file.write @s3.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
       end
+
+      @exif = EXIFR::JPEG.new("./public/temp.jpg")
+      @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
+                  :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
+                  :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
+
+      flash[:notice] = 'Map was successfully created.'
+      redirect_to @map
+    else
+      flash[:notice] = 'Map was can not created.'
+      redirect_to root_path
     end
   end
 
   # PATCH/PUT /maps/1
   # PATCH/PUT /maps/1.json
   def update
-    respond_to do |format|
-      if @map.update(map_params)
+    if @map.update(map_params)
 
-        File.open("public/temp.jpg","wb") do |file|
-          file.write client.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
-        end
-
-        @exif = EXIFR::JPEG.new("public/temp.jpg")
-        @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
-                    :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
-                    :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
-
-        format.html { redirect_to @map, notice: 'Map was successfully updated.' }
-        format.json { render :show, status: :ok, location: @map }
-      else
-        format.html { render :edit }
-        format.json { render json: @map.errors, status: :unprocessable_entity }
+      File.open("./public/temp.jpg","wb") do |file|
+        file.write client.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
       end
+
+      @exif = EXIFR::JPEG.new("./public/temp.jpg")
+      @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
+                  :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
+                  :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
+
+      flash[:notice] = 'Map was successfully created.'
+      redirect_to @map
+    else
+      flash[:notice] = 'Map was can not created.'
+      redirect_to root_path
     end
   end
 
