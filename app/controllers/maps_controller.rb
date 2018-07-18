@@ -3,11 +3,12 @@ require 'exifr/jpeg'
 
 class MapsController < ApplicationController
   before_action :set_map, only: [:show, :edit, :update, :destroy]
+  PER = 10
 
   # GET /maps
   # GET /maps.json
   def index
-    @maps = Map.all
+    @maps = Map.all.page(params[:page]).per(PER)
   end
 
   # GET /maps/1
