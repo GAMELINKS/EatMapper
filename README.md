@@ -31,6 +31,11 @@ ActiveAdminによる管理画面作成に際して参考にさせて頂きまし
 ページネーション実装にあたって参考にさせていただきました。
 誠にありがとうございます。
 
+[【Rails】AWS S3へ画像のアップロードが出来た♪](https://pg-happy.jp/rails-aws-s3-upload.html)
+[AWS SDK for Ruby V2でS3をいろいろ使う](https://qiita.com/tamikura@github/items/a6f819a0ce2b6c79bec7)
+
+AWS S3への画像アップロードに際して参考にさせて頂きました。
+
 # 開発環境
 
 Ruby 2.3.3
