@@ -17,7 +17,7 @@
         <td><%= map.date %></td>
         <td><%= image_tag(map.image.to_s, :size => "100x200") %></td>
         <td><%= button_tag(link_to 'Show', map) %></td>
-        <% if user_signed_in? %>
+        <% if user_signed_in? && map.user_id == current_user.id %>
         <td><%= button_tag(link_to 'Edit', edit_map_path(map)) %></td>
         <td><%= button_tag(link_to 'Destroy', map, method: :delete, data: { confirm: 'Are you sure?' }) %></td>
         <% end %>
