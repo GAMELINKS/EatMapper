@@ -35,7 +35,9 @@ class MapsController < ApplicationController
       if @map.save
         image_path = "./public#{@map.image.to_s}"
         @exif = EXIFR::JPEG.new(image_path.to_s)
-        @map.update(:longitude => @exif.gps.longitude, :latitude => @exif.gps.latitude, :date => @exif.date_time_original)
+        @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
+                    :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
+                    :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
 
         format.html { redirect_to @map, notice: 'Map was successfully created.' }
         format.json { render :show, status: :created, location: @map }
@@ -54,7 +56,9 @@ class MapsController < ApplicationController
 
         image_path = "./public#{@map.image.to_s}"
         @exif = EXIFR::JPEG.new(image_path.to_s)
-        @map.update(:longitude => @exif.gps.longitude, :latitude => @exif.gps.latitude, :date => @exif.date_time_original)
+        @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
+                    :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
+                    :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
 
         format.html { redirect_to @map, notice: 'Map was successfully updated.' }
         format.json { render :show, status: :ok, location: @map }
