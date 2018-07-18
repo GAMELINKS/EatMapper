@@ -35,6 +35,9 @@ gem 'jbuilder', '~> 2.5'
 # using Photo's info
 gem 'exifr', '1.2.6'
 
+# using GoogleMap
+gem 'gmaps4rails'
+
 # Using Photo Uploader
 gem 'carrierwave'
 
