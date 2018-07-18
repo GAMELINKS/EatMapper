@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_18_055848) do
+ActiveRecord::Schema.define(version: 2018_07_18_060120) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 2018_07_18_055848) do
     t.string "image"
     t.string "latitude"
     t.string "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mastodon_clients", force: :cascade do |t|
+    t.string "domain"
+    t.string "client_id"
+    t.string "client_secret"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
