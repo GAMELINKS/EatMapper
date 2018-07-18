@@ -61,6 +61,9 @@ gem 'carrierwave'
 # Using Webpacker
 gem 'webpacker'
 
+# using fog-aws
+gem 'fog-aws'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
