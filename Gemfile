@@ -32,6 +32,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# using kaminari
+gem 'kaminari'
+gem 'kaminari-bootstrap'
+
 # using Photo's info
 gem 'exifr', '1.2.6'
 
