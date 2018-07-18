@@ -3,6 +3,7 @@ require 'exifr/jpeg'
 
 class MapsController < ApplicationController
   before_action :set_map, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:new]
   PER = 10
 
   # GET /maps
@@ -83,5 +84,12 @@ class MapsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def map_params
       params.require(:map).permit(:title, :about, :date, :image, :latitude, :longitude)
+    end
+
+    def require_login
+      if !user_signed_in?
+        flash[:error] = "ログインしてください！"
+        redirect_to user_mastodon_omniauth_authorize_path
+      end
     end
 end
