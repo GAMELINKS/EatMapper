@@ -42,10 +42,10 @@ class MapsController < ApplicationController
             file.write @s3.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
         end
 
-#        @exif = EXIFR::JPEG.new("./public/temp.jpg")
-#        @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
-#                    :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
-#                    :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
+        @exif = EXIFR::JPEG.new("./public/temp.jpg")
+        @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
+                    :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
+                    :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
 
         format.html { redirect_to @map, notice: 'Map was successfully created.' }
         format.json { render :show, status: :created, location: @map }
