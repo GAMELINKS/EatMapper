@@ -1,7 +1,10 @@
+require 'aws-sdk'
+require 'open-uri'
 require 'exifr'
 require 'exifr/jpeg'
 
 class MapsController < ApplicationController
+  before_action :set_s3_client, only: [:create, :update]
   before_action :set_map, only: [:show, :edit, :update, :destroy]
   before_action :require_login, only: [:new]
   PER = 10
@@ -34,8 +37,12 @@ class MapsController < ApplicationController
 
     respond_to do |format|
       if @map.save
-        image_path = @map.image.to_s
-        @exif = EXIFR::JPEG.new(image_path.to_s)
+
+        File.open("./public/temp.jpg","wb") do |file|
+            file.puts @s3.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
+        end
+
+        @exif = EXIFR::JPEG.new("./public/temp.jpg")
         @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
                     :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
                     :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
@@ -55,8 +62,11 @@ class MapsController < ApplicationController
     respond_to do |format|
       if @map.update(map_params)
 
-        image_path = @map.image.to_s
-        @exif = EXIFR::JPEG.new(image_path.to_s)
+        File.open("./public/temp.jpg","wb") do |file|
+          file.puts @s3.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
+        end
+
+        @exif = EXIFR::JPEG.new("./public/temp.jpg")
         @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
                     :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
                     :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
@@ -81,6 +91,13 @@ class MapsController < ApplicationController
   end
 
   private
+    def set_s3_client
+      @s3 = Aws::S3::Client.new(:region => ENV['S3_REGION'],
+                                :access_key_id => ENV['S3_ACCESS_KEY'],
+                                :secret_access_key => ENV['S3_SECRET_KEY'],
+            )
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_map
       @map = Map.find(params[:id])
