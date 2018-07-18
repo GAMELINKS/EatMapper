@@ -38,7 +38,7 @@ class MapsController < ApplicationController
     respond_to do |format|
       if @map.save
 
-        File.open("./public/temp.jpg","wb") do |file|
+        File.open("public/temp.jpg","wb") do |file|
             file.write @s3.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
         end
 
