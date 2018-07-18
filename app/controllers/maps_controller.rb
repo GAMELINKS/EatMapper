@@ -38,11 +38,11 @@ class MapsController < ApplicationController
     respond_to do |format|
       if @map.save
 
-        File.open("public/temp.jpg","wb") do |file|
+        File.open("./public/temp.jpg","wb") do |file|
             file.write @s3.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
         end
 
-        @exif = EXIFR::JPEG.new("public/temp.jpg")
+        @exif = EXIFR::JPEG.new("./public/temp.jpg")
         @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
                     :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
                     :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
@@ -62,11 +62,11 @@ class MapsController < ApplicationController
     respond_to do |format|
       if @map.update(map_params)
 
-        File.open("public/temp.jpg","wb") do |file|
+        File.open("./public/temp.jpg","wb") do |file|
           file.write client.get_object(:bucket => ENV['S3_BUCKET_NAME'] , :key => @map.image.path.to_s).body.read
         end
 
-        @exif = EXIFR::JPEG.new("public/temp.jpg")
+        @exif = EXIFR::JPEG.new("./public/temp.jpg")
         @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
                     :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
                     :date => @exif.date_time_original.class == nil.class ? nil : @exif.date_time_original)
