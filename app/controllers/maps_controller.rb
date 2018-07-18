@@ -30,6 +30,7 @@ class MapsController < ApplicationController
   # POST /maps.json
   def create
     @map = Map.new(map_params)
+    @map.user_id = current_user.id
 
     respond_to do |format|
       if @map.save
