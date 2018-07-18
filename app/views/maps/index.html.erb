@@ -28,4 +28,8 @@
 
 <%= paginate @maps %>
 
-<%= button_tag(link_to 'New Map', new_map_path) %>
+<% if user_signed_in? %>
+  <%= button_tag(link_to 'New Map', new_map_path) %>
+<% else %>
+  <%= button_tag(link_to 'ログイン', user_mastodon_omniauth_authorize_path) %>
+<% end %>
