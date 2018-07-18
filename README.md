@@ -3,7 +3,7 @@
 外出先で見つけたおいしいお店を記録できるRailsアプリです。
 
 # ライセンス
-[MITライセンス](./LISENCE)として公開しています。
+[MITライセンス](./LICENSE)として公開しています。
 
 # 参考資料
 [Railsの教科書](http://igarashikuniaki.net/rails_textbook/) (@igaiga555氏)
