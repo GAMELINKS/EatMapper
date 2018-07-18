@@ -20,7 +20,7 @@
               <% if current_user.admin == true %>
               <%= link_to '管理画面', admin_root_path, class: "dropdown-item" %>
               <% end %>
-              <%= link_to '新しい写真を投稿', new_photo_path, class: "dropdown-item" %>
+              <%= link_to '新しい写真を投稿', new_map_path, class: "dropdown-item" %>
               <%= link_to 'ログアウト', destroy_user_session_path, class: "dropdown-item", method: :delete %>
               <% else %>
               <%= link_to 'ログイン', user_mastodon_omniauth_authorize_path, class: "dropdown-item" %>
