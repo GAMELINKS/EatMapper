@@ -32,6 +32,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# using Devise & ActiveAdmin
+gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'devise'
+
 # using kaminari
 gem 'kaminari'
 gem 'kaminari-bootstrap'
