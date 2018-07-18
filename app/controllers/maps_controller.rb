@@ -1,3 +1,6 @@
+require 'exifr'
+require 'exifr/jpeg'
+
 class MapsController < ApplicationController
   before_action :set_map, only: [:show, :edit, :update, :destroy]
 
@@ -28,6 +31,10 @@ class MapsController < ApplicationController
 
     respond_to do |format|
       if @map.save
+        image_path = "./public#{@map.image.to_s}"
+        @exif = EXIFR::JPEG.new(image_path.to_s)
+        @map.update(:longitude => @exif.gps.longitude, :latitude => @exif.gps.latitude, :date => @exif.date_time_original)
+
         format.html { redirect_to @map, notice: 'Map was successfully created.' }
         format.json { render :show, status: :created, location: @map }
       else
@@ -42,6 +49,11 @@ class MapsController < ApplicationController
   def update
     respond_to do |format|
       if @map.update(map_params)
+
+        image_path = "./public#{@map.image.to_s}"
+        @exif = EXIFR::JPEG.new(image_path.to_s)
+        @map.update(:longitude => @exif.gps.longitude, :latitude => @exif.gps.latitude, :date => @exif.date_time_original)
+
         format.html { redirect_to @map, notice: 'Map was successfully updated.' }
         format.json { render :show, status: :ok, location: @map }
       else
