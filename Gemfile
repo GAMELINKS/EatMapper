@@ -32,6 +32,11 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# using Mastodon Login
+gem 'mastodon-api', require: 'mastodon'
+gem 'omniauth-mastodon'
+gem 'omniauth'
+
 # using serviceworker
 gem "serviceworker-rails"
 
