@@ -34,7 +34,7 @@ class MapsController < ApplicationController
 
     respond_to do |format|
       if @map.save
-        image_path = "./public#{@map.image.to_s}"
+        image_path = @map.image.to_s
         @exif = EXIFR::JPEG.new(image_path.to_s)
         @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
                     :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
@@ -55,7 +55,7 @@ class MapsController < ApplicationController
     respond_to do |format|
       if @map.update(map_params)
 
-        image_path = "./public#{@map.image.to_s}"
+        image_path = @map.image.to_s
         @exif = EXIFR::JPEG.new(image_path.to_s)
         @map.update(:longitude => @exif.gps.class == nil.class ? nil : @exif.gps.longitude, 
                     :latitude => @exif.gps.class == nil.class ? nil : @exif.gps.latitude, 
