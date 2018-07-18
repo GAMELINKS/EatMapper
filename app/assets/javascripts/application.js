@@ -18,3 +18,4 @@
 //= require bootstrap-umi/dist/js/bootstrap
 //= require gmaps/google
 //= require_tree .
+//= require serviceworker-companion
